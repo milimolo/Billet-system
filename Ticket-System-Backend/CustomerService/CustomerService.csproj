@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
