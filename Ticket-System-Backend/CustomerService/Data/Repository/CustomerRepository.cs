@@ -12,24 +12,24 @@ namespace CustomerService.Data.Repository
             _context = context;
         }
 
-        public Customer Add(Customer entity)
+        public async Task<Customer> AddAsync(Customer entity, CancellationToken cancellationToken = default)
         {
             Customer newCustomer = _context.Customers.Add(entity).Entity;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
             return newCustomer;
         }
 
-        public void Edit(Customer entity)
+        public async Task EditAsync(Customer entity, CancellationToken cancellationToken = default)
         {
             _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public Customer Get(int id)
+        public async Task<Customer> GetAsync(int id, CancellationToken cancellationToken = default)
         {
             try
             {
-                return _context.Customers.FirstOrDefault(c => c.Id == id);
+                return await _context.Customers.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
             }
             catch (NullReferenceException e)
             {
@@ -38,18 +38,18 @@ namespace CustomerService.Data.Repository
             }
         }
 
-        public IEnumerable<Customer> GetAll()
+        public async Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return _context.Customers.ToList();
+            return await _context.Customers.ToListAsync(cancellationToken);
         }
 
-        public void Remove(int id)
+        public async Task RemoveAsync(int id, CancellationToken cancellationToken = default)
         {
             try
             {
-                Customer? customer = _context.Customers.FirstOrDefault(c => c.Id == id);
+                Customer? customer = await GetAsync(id, cancellationToken);
                 _context.Customers.Remove(customer);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (NullReferenceException e)
             {
