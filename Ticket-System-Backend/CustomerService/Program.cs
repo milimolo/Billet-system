@@ -1,11 +1,12 @@
 ﻿using CustomerService.Data;
 using CustomerService.Data.DbInitializer;
 using CustomerService.Data.Repository;
+using CustomerService.Infrastructure;
 using CustomerService.Models;
 using Microsoft.EntityFrameworkCore;
 
 string AMQPConnectionString =
-    "host=roedeer.rmq.cloudamqp.com;virtualHost=hmkzgqhj;username=hmkzgqhj;password=TbxxIbE4-PwgOS2KbToo7aSJdV8H3XsJ";
+    "host=sparrow.rmq.cloudamqp.com;virtualHost=fealjkuy;username=fealjkuy;password=X7R3PC-9txrCgLqBqof9qltyOwHnZ3xU";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,10 @@ using (var scope = app.Services.CreateScope())
     var dbInitializer = services.GetService<IDbInitializer>();
     dbInitializer.Initialize(dbContext);
 }
+
+// Create a message listener in a separate thread.
+Task.Factory.StartNew(() =>
+    new MessageListener(app.Services, AMQPConnectionString).Start());
 
 app.UseHttpsRedirection();
 
