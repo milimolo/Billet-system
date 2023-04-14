@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerService", "CustomerService\CustomerService.csproj", "{A4295E8C-974B-4771-B53C-9E83189087AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{097B7C09-7F0C-4184-B4EF-3DE6C98B3573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedModels", "SharedModels\SharedModels.csproj", "{097B7C09-7F0C-4184-B4EF-3DE6C98B3573}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderApi", "OrderApi\OrderApi.csproj", "{C37EBCF3-5BE4-4A46-8920-1096815AE684}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{097B7C09-7F0C-4184-B4EF-3DE6C98B3573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{097B7C09-7F0C-4184-B4EF-3DE6C98B3573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{097B7C09-7F0C-4184-B4EF-3DE6C98B3573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C37EBCF3-5BE4-4A46-8920-1096815AE684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C37EBCF3-5BE4-4A46-8920-1096815AE684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C37EBCF3-5BE4-4A46-8920-1096815AE684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C37EBCF3-5BE4-4A46-8920-1096815AE684}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

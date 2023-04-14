@@ -5,8 +5,7 @@ namespace CustomerService.Data
 {
     public class CustomerServiceContext : DbContext
     {
-        public CustomerServiceContext(DbContextOptions<CustomerServiceContext> options)
-            : base(options)
+        public CustomerServiceContext(DbContextOptions<CustomerServiceContext> options) : base(options)
         {
         }
 
