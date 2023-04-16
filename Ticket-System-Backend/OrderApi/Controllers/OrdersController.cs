@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderApi.Data.Repository;
+using OrderApi.Infrastructure;
 using SharedModels;
+using SharedModels.Messages.OrderMessages;
 
 namespace OrderApi.Controllers
 {
@@ -9,11 +11,13 @@ namespace OrderApi.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IRepository<Order> repository;
+        private readonly IOrderRepository repository;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public OrdersController(IRepository<Order> repos)
+        public OrdersController(IOrderRepository repos, IMessagePublisher messagePublisher)
         {
             repository = repos;
+            _messagePublisher = messagePublisher;
         }
 
         // GET: orders
@@ -51,9 +55,9 @@ namespace OrderApi.Controllers
                 order.OrderStatus = OrderStatus.Tentative;
                 var newOrder =  await repository.AddAsync(order, cancellationToken);
 
-                // Publish message: OrderCreatedMessage
-                //_messagePublisher.PublishOrderCreatedMessage(
-                //    newOrder.CustomerId, newOrder.Id, newOrder.OrderLines);
+                //Publish message: OrderCreatedMessage
+                _messagePublisher.PublishOrderCreatedMessage(
+                    newOrder.CustomerId, newOrder.Id, newOrder.OrderLines);
 
                 // Wait for orderStatus to return "Completed"
                 bool completed = false;
