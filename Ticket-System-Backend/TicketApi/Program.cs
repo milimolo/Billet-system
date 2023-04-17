@@ -1,24 +1,54 @@
+using Microsoft.EntityFrameworkCore;
+using TicketApi.Data;
+using TicketApi.Data.DbInitializer;
+using TicketApi.Data.Repository;
+using TicketApi.Infrastructure;
+using TicketApi.Models;
+
+string AMQPConnectionString =
+    "host=sparrow.rmq.cloudamqp.com;virtualHost=fealjkuy;username=fealjkuy;password=X7R3PC-9txrCgLqBqof9qltyOwHnZ3xU";
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
+
+builder.Services.AddDbContext<TicketApiContext>(opt => opt.UseInMemoryDatabase("OrdersDb"));
+
+// Register repositories for dependency injection
+builder.Services.AddScoped<IRepository<Ticket>, TicketRepository>();
+
+// Register database initializer for dependency injection
+builder.Services.AddTransient<IDbInitializer, DbInitializer>();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Initialize the database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetService<TicketApiContext>();
+    var dbInitializer = services.GetService<IDbInitializer>();
+    dbInitializer.Initialize(dbContext);
+}
+
+// Create a message listener in a separate thread.
+Task.Factory.StartNew(() =>
+    new MessageListener(app.Services, AMQPConnectionString).Start());
+
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

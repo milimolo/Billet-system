@@ -8,5 +8,6 @@
         public DateTime EventDate { get; set; }
         public decimal Price { get; set; }
         public int TicketsRemaining { get; set; }
+        public int TicketsReserved { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using OrderApi.Data;
 using OrderApi.Data.DbInitializer;
 using OrderApi.Data.Repository;
 using OrderApi.Infrastructure;
-using SharedModels;
 
 string AMQPConnectionString =
     "host=sparrow.rmq.cloudamqp.com;virtualHost=fealjkuy;username=fealjkuy;password=X7R3PC-9txrCgLqBqof9qltyOwHnZ3xU";

@@ -18,7 +18,7 @@ namespace CustomerService.Controllers
 
         // GET: Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomersAsync(CancellationToken cancellationToken)
         {
             var customers = await repository.GetAllAsync(cancellationToken);
             return Ok(customers);
@@ -26,7 +26,7 @@ namespace CustomerService.Controllers
 
         // GET: Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<Customer>> GetCustomerAsync(int id, CancellationToken cancellationToken)
         {
             var customer = await repository.GetAsync(id, cancellationToken);
 
@@ -41,7 +41,7 @@ namespace CustomerService.Controllers
         // PUT: Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(int id, Customer customer, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutCustomerAsync(int id, Customer customer, CancellationToken cancellationToken)
         {
             if (id != customer.Id)
             {
@@ -56,7 +56,7 @@ namespace CustomerService.Controllers
         // POST: Customers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Customer>> PostCustomer(Customer customer, CancellationToken cancellationToken)
+        public async Task<ActionResult<Customer>> PostCustomerAsync(Customer customer, CancellationToken cancellationToken)
         {
             var newCustomer = await repository.AddAsync(customer, cancellationToken);
             return newCustomer;
@@ -64,7 +64,7 @@ namespace CustomerService.Controllers
 
         // DELETE: Customers/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteCustomerAsync(int id, CancellationToken cancellationToken)
         {
             var customer = await repository.GetAsync(id, cancellationToken);
             if (customer == null)

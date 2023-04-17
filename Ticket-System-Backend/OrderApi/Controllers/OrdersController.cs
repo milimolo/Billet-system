@@ -68,7 +68,7 @@ namespace OrderApi.Controllers
                     {
                         completed = true;
                     }
-                    Thread.Sleep(200);
+                    Thread.Sleep(500);
                 }
 
                 return CreatedAtRoute("GetOrder", new { id = newOrder.Id }, newOrder);
