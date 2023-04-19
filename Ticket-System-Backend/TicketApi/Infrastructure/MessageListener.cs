@@ -47,7 +47,6 @@ namespace TicketApi.Infrastructure
                     {
                         var ticket = await ticketRepo.GetAsync(ol.ProductId, cancellationToken);
                         ticket.TicketsReserved += ol.NoOfItems;
-                        ticket.TicketsRemaining -= ol.NoOfItems;
                         await ticketRepo.EditAsync(ticket, cancellationToken);
                     }
 

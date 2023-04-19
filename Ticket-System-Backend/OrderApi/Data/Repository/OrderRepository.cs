@@ -46,6 +46,7 @@ namespace OrderApi.Data.Repository
                 var order = await _context.Orders
                     .Include(o => o.OrderLines)
                     .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+                await _context.Entry(order).ReloadAsync();
 
                 foreach (var ol in order.OrderLines)
                 {
