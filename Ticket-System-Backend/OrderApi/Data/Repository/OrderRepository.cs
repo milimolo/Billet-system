@@ -17,15 +17,15 @@ namespace OrderApi.Data.Repository
             if (entity.Date == null)
                 entity.Date = DateTime.Now;
 
-            Order newOrder = _context.Orders.Add(entity).Entity;
-            await _context.SaveChangesAsync(cancellationToken);
-
-            foreach (var ol in newOrder.OrderLines)
+            foreach (var ol in entity.OrderLines)
             {
                 ol.Order = null;
             };
 
-            return newOrder;
+            await _context.Orders.AddAsync(entity);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return entity;
         }
 
         public async Task EditAsync(Order entity, CancellationToken cancellationToken = default)
@@ -39,6 +39,11 @@ namespace OrderApi.Data.Repository
             return await _context.Orders.ToListAsync(cancellationToken);
         }
 
+        public async Task<IEnumerable<OrderLine>> GetAllOrderLinesAsync(CancellationToken cancellationToken)
+        {
+            return await _context.OrderLines.ToListAsync(cancellationToken);
+        }
+
         public async Task<Order> GetAsync(int id, CancellationToken cancellationToken = default)
         {
             try
@@ -46,7 +51,6 @@ namespace OrderApi.Data.Repository
                 var order = await _context.Orders
                     .Include(o => o.OrderLines)
                     .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
-                await _context.Entry(order).ReloadAsync();
 
                 foreach (var ol in order.OrderLines)
                 {
@@ -69,6 +73,15 @@ namespace OrderApi.Data.Repository
                 .ToListAsync(cancellationToken);
 
             return ordersForCustomer;
+        }
+
+        public async Task<Order> GetForMessageAsync(int id, CancellationToken cancellationToken = default)
+        {
+            var order = await _context.Orders
+                    .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            await _context.Entry(order).ReloadAsync();
+
+            return order;
         }
 
         public async Task RemoveAsync(int id, CancellationToken cancellationToken = default)

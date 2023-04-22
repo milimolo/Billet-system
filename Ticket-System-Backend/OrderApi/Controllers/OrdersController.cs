@@ -28,6 +28,13 @@ namespace OrderApi.Controllers
             return orders;
         }
 
+        [HttpGet("lines")]
+        public async Task<IEnumerable<OrderLine>> GetAllOrderLines(CancellationToken cancellationToken)
+        {
+            var orderLines = await repository.GetAllOrderLinesAsync(cancellationToken);
+            return orderLines;
+        }
+
         // GET orders/5
         [HttpGet("{id}", Name = "GetOrder")]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
@@ -54,7 +61,7 @@ namespace OrderApi.Controllers
                 // Create the tentative order
                 order.OrderStatus = OrderStatus.Tentative;
                 var newOrder =  await repository.AddAsync(order, cancellationToken);
-
+                newOrder.OrderLines.ForEach(ol => ol.Order = null);
                 //Publish message: OrderCreatedMessage
                 _messagePublisher.PublishOrderCreatedMessage(
                     newOrder.CustomerId, newOrder.Id, newOrder.OrderLines);
@@ -63,7 +70,7 @@ namespace OrderApi.Controllers
                 bool completed = false;
                 while (!completed)
                 {
-                    var tentativeOrder = await repository.GetAsync(newOrder.Id, cancellationToken);
+                    var tentativeOrder = await repository.GetForMessageAsync(newOrder.Id, cancellationToken);
                     if (tentativeOrder.OrderStatus == OrderStatus.Completed)
                     {
                         completed = true;

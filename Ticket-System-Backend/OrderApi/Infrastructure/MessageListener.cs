@@ -40,7 +40,7 @@ namespace OrderApi.Infrastructure
                 var orderRepos = services.GetService<IOrderRepository>();
 
                 // Mark as completed
-                var order = await orderRepos.GetAsync(message.OrderId);
+                var order = await orderRepos.GetForMessageAsync(message.OrderId);
                 order.OrderStatus = OrderStatus.Completed;
                 await orderRepos.EditAsync(order);
             }
