@@ -13,5 +13,6 @@ namespace SharedModels
         public Order? Order { get; set; }
         public int ProductId { get; set; }
         public int NoOfItems { get; set; }
+        public double Price { get; set; }
     }
 }

@@ -27,6 +27,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(policyBuilder =>
+    policyBuilder.AddDefaultPolicy(policy =>
+        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+);
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -49,6 +54,8 @@ Task.Factory.StartNew(() =>
     new MessageListener(app.Services, AMQPConnectionString).Start());
 
 //app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthentication();
 

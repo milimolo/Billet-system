@@ -1,0 +1,9 @@
+<h2>Order list</h2>
+<ul class="list-group" *ngIf="orders">
+  <li *ngFor="let order of orders">
+    <a href="#" class="list-group-item waves-light" routerLink="/Orders/{{order.id}}">
+      {{order.id}}
+    </a>
+  </li>
+</ul>
+<h4 *ngIf="!orders">Loading.....</h4>

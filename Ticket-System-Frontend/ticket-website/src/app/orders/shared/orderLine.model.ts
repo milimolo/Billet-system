@@ -3,4 +3,5 @@ export interface OrderLine {
   orderId: number;
   productId: number;
   noOfItems: number;
+  price: number;
 }

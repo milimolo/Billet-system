@@ -17,12 +17,12 @@ namespace OrderApi.Data.DbInitializer
 
             var mockOrderLines = new List<OrderLine>
             {
-                new OrderLine { NoOfItems = 3, OrderID = 1, ProductId = 1 }
+                new OrderLine { NoOfItems = 3, OrderID = 1, ProductId = 1, Price = 300 }
             };
 
             List<Order> orders = new List<Order>
             {
-                new Order { Date = DateTime.Today, OrderStatus = OrderStatus.Completed, OrderLines = mockOrderLines, CustomerId = 1 }
+                new Order { Date = DateTime.Today, OrderStatus = OrderStatus.Completed, OrderLines = mockOrderLines, CustomerId = 1, TotalPrice = 300 }
             };
 
             context.Orders.AddRange(orders);

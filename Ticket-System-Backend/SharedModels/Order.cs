@@ -13,5 +13,6 @@ namespace SharedModels
         public int CustomerId { get; set; }
         public List<OrderLine>? OrderLines { get; set; }
         public OrderStatus? OrderStatus { get; set; }
+        public double TotalPrice { get; set; }
     }
 }
