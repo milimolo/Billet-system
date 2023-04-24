@@ -1,1 +1,48 @@
-<p>order works!</p>
+<button class="btn btn-primary" routerLink="/Orders">Back</button>
+<div *ngIf="order">
+  <h2>Order #{{order.id}} Details</h2>
+
+  <div>
+    <label>Customer id:
+      <h4>{{order.customerId}}</h4>
+    </label>
+  </div>
+  <div>
+    <label>Purchase date:
+      <h4>{{order.date}}</h4>
+    </label>
+  </div>
+  <div>
+    <h3>Order lines:
+      <div *ngFor="let ol of order.orderLines">
+        <div>
+          <label>Product ID:</label>
+          <div>
+            {{ol.productId}}
+          </div>
+        </div>
+        <div>
+          <label>Amount of tickets:</label>
+          <div>
+            {{ol.noOfItems}}
+          </div>
+        </div>
+        <div>
+          <label>Total ticket price:</label>
+          <div>
+            {{ol.price}}
+          </div>
+        </div>
+      </div>
+    </h3>
+  </div>
+  <div>
+    <label>Total price:
+      <h4>{{order.totalPrice}}</h4>
+    </label>
+  </div>
+
+</div>
+<div *ngIf="!order">
+  <h2>Order not found.</h2>
+</div>

@@ -39,6 +39,10 @@ namespace OrderApi.Controllers
         [HttpGet("{id}", Name = "GetOrder")]
         public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
         {
+            if (id == 0)
+            {
+                return NotFound();
+            }
             var item = await repository.GetAsync(id, cancellationToken);
             if (item == null)
             {
