@@ -1,0 +1,28 @@
+<button class="btn btn-primary" routerLink="/Tickets">Back</button>
+<div *ngIf="ticket">
+  <h2>{{ticket.name}} Details</h2>
+  <div>
+    <label>Event location:
+      <h4>{{ticket.location}}</h4>
+    </label>
+  </div>
+  <div>
+    <label>Event date:
+      <h4>{{ticket.eventDate}}</h4>
+    </label>
+  </div>
+  <div>
+    <label>Tickets remaining:
+      <h4>{{ticket.ticketsRemaining-ticket.ticketsReserved}}</h4>
+    </label>
+  </div>
+  <div>
+    <label>Price:
+      <h4>{{ticket.price}},-</h4>
+    </label>
+  </div>
+
+</div>
+<div *ngIf="!ticket">
+  <h2>Ticket not found.</h2>
+</div>

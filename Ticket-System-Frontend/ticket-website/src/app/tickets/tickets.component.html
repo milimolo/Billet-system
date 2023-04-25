@@ -1,0 +1,15 @@
+<h2>Ticket list</h2>
+<ul class="list-group" *ngIf="tickets">
+  <li *ngFor="let ticket of tickets">
+    <a href="#" class="list-group-item waves-light" routerLink="/Tickets/{{ticket.id}}">
+      {{ticket.name}}
+      <div>
+        Price: {{ticket.price}},- Tickets left: {{ticket.ticketsRemaining - ticket.ticketsReserved}}
+        <div>
+          {{ticket.location}}
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
+<h4 *ngIf="!tickets">Loading.....</h4>

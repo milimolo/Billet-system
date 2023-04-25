@@ -7,12 +7,16 @@ import { OrdersComponent } from './orders/orders.component';
 import { HttpClientModule } from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import { OrderComponent } from './orders/order/order.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketComponent } from './tickets/ticket/ticket.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrdersComponent,
-    OrderComponent
+    OrderComponent,
+    TicketsComponent,
+    TicketComponent
   ],
   imports: [
     BrowserModule,
