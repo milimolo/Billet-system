@@ -9,6 +9,7 @@ import {RouterModule} from "@angular/router";
 import { OrderComponent } from './orders/order/order.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketComponent } from './tickets/ticket/ticket.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TicketComponent } from './tickets/ticket/ticket.component';
     OrdersComponent,
     OrderComponent,
     TicketsComponent,
-    TicketComponent
+    TicketComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
