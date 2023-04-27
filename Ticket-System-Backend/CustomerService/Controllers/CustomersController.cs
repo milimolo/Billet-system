@@ -65,6 +65,7 @@ namespace CustomerApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomerAsync(Customer customer, CancellationToken cancellationToken)
         {
+            // Implement Dtos
             var newCustomer = await repository.AddAsync(customer, cancellationToken);
             return newCustomer;
         }
