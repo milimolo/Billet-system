@@ -10,6 +10,8 @@ import { OrderComponent } from './orders/order/order.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { TicketComponent } from './tickets/ticket/ticket.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { LoginComponent } from './shared/login/login.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -18,13 +20,16 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
     OrderComponent,
     TicketsComponent,
     TicketComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

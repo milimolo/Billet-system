@@ -1,9 +1,11 @@
 ﻿using CustomerService.Data;
 using CustomerService.Data.DbInitializer;
+using CustomerService.Data.Helpers;
 using CustomerService.Data.Repository;
 using CustomerService.Infrastructure;
 using CustomerService.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 string AMQPConnectionString =
     "host=sparrow.rmq.cloudamqp.com;virtualHost=fealjkuy;username=fealjkuy;password=X7R3PC-9txrCgLqBqof9qltyOwHnZ3xU";
@@ -12,6 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 
+Byte[] secretBytes = new byte[40];
+Random rand = new Random();
+rand.NextBytes(secretBytes);
+
+builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(secretBytes),
+        ValidateLifetime = true, //validate the expiration and not before values in the token
+        ClockSkew = TimeSpan.FromMinutes(5) //5 minute tolerance for the expiration date
+    };
+});
+
 builder.Services.AddDbContext<CustomerServiceContext>(opt => opt.UseInMemoryDatabase("CustomersDb"));
 
 // Register repositories for dependency injection
@@ -19,6 +38,8 @@ builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
 
 // Register database initializer for dependency injection
 builder.Services.AddTransient<IDbInitializer, DbInitializer>();
+
+builder.Services.AddSingleton<IAuthenticationHelper>(new AuthenticationHelper(secretBytes));
 
 builder.Services.AddControllers();
 
