@@ -1,9 +1,9 @@
-﻿using CustomerService.Models;
+﻿using CustomerApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace CustomerService.Data.Helpers
+namespace CustomerApi.Data.Helpers
 {
     public class AuthenticationHelper : IAuthenticationHelper
     {

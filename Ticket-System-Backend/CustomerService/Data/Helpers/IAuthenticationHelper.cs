@@ -1,6 +1,6 @@
-﻿using CustomerService.Models;
+﻿using CustomerApi.Models;
 
-namespace CustomerService.Data.Helpers
+namespace CustomerApi.Data.Helpers
 {
     public interface IAuthenticationHelper
     {

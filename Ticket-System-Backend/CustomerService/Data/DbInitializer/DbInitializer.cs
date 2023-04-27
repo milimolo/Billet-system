@@ -1,7 +1,7 @@
-﻿using CustomerService.Data.Helpers;
-using CustomerService.Models;
+﻿using CustomerApi.Data.Helpers;
+using CustomerApi.Models;
 
-namespace CustomerService.Data.DbInitializer
+namespace CustomerApi.Data.DbInitializer
 {
     public class DbInitializer : IDbInitializer
     {
@@ -12,7 +12,7 @@ namespace CustomerService.Data.DbInitializer
             authenticationHelper = authHelper;
         }
 
-        public void Initialize(CustomerServiceContext context)
+        public void Initialize(CustomerApiContext context)
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();

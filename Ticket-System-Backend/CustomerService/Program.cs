@@ -1,9 +1,9 @@
-﻿using CustomerService.Data;
-using CustomerService.Data.DbInitializer;
-using CustomerService.Data.Helpers;
-using CustomerService.Data.Repository;
-using CustomerService.Infrastructure;
-using CustomerService.Models;
+﻿using CustomerApi.Data;
+using CustomerApi.Data.DbInitializer;
+using CustomerApi.Data.Helpers;
+using CustomerApi.Data.Repository;
+using CustomerApi.Models;
+using CustomerApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,7 +31,7 @@ builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.JwtBearer
     };
 });
 
-builder.Services.AddDbContext<CustomerServiceContext>(opt => opt.UseInMemoryDatabase("CustomersDb"));
+builder.Services.AddDbContext<CustomerApiContext>(opt => opt.UseInMemoryDatabase("CustomersDb"));
 
 // Register repositories for dependency injection
 builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
@@ -63,7 +63,7 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var dbContext = services.GetService<CustomerServiceContext>();
+    var dbContext = services.GetService<CustomerApiContext>();
     var dbInitializer = services.GetService<IDbInitializer>();
     dbInitializer.Initialize(dbContext);
 }

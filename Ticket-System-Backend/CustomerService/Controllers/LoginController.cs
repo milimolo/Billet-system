@@ -1,10 +1,10 @@
-﻿using CustomerService.Data.Helpers;
-using CustomerService.Data.Repository;
-using CustomerService.Models;
+﻿using CustomerApi.Data.Helpers;
+using CustomerApi.Data.Repository;
+using CustomerApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CustomerService.Controllers
+namespace CustomerApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]

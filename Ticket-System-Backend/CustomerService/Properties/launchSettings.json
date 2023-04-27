@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "CustomerService": {
+    "CustomerApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

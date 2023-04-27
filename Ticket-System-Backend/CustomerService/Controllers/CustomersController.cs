@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CustomerService.Models;
-using CustomerService.Data.Repository;
+using CustomerApi.Models;
+using CustomerApi.Data.Repository;
+using CustomerApi.Controllers.Dtos;
 
-namespace CustomerService.Controllers
+namespace CustomerApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
@@ -18,15 +19,20 @@ namespace CustomerService.Controllers
 
         // GET: Customers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Customer>>> GetCustomersAsync(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<CustomerDto>>> GetCustomersAsync(CancellationToken cancellationToken)
         {
             var customers = await repository.GetAllAsync(cancellationToken);
-            return Ok(customers);
+            if (!customers.Any())
+            {
+                return NotFound();
+            }
+            var customerDtos = customers.Select(x => new CustomerDto(x));
+            return Ok(customerDtos);
         }
 
         // GET: Customers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomerAsync(int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<CustomerDto>> GetCustomerAsync(int id, CancellationToken cancellationToken)
         {
             var customer = await repository.GetAsync(id, cancellationToken);
 
@@ -34,8 +40,9 @@ namespace CustomerService.Controllers
             {
                 return NotFound();
             }
+            var customerDto = new CustomerDto(customer);
 
-            return customer;
+            return customerDto;
         }
 
         // PUT: Customers/5

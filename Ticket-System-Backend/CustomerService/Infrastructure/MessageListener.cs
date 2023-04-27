@@ -1,6 +1,6 @@
 ﻿using EasyNetQ;
 
-namespace CustomerService.Infrastructure
+namespace CustomerApi.Infrastructure
 {
     public class MessageListener
     {

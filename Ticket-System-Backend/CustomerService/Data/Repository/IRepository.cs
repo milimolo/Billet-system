@@ -1,4 +1,4 @@
-﻿namespace CustomerService.Data.Repository
+﻿namespace CustomerApi.Data.Repository
 {
     public interface IRepository<T>
     {

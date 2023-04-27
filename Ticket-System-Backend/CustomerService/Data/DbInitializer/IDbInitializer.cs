@@ -1,7 +1,7 @@
-﻿namespace CustomerService.Data.DbInitializer
+﻿namespace CustomerApi.Data.DbInitializer
 {
     public interface IDbInitializer
     {
-        void Initialize(CustomerServiceContext context);
+        void Initialize(CustomerApiContext context);
     }
 }

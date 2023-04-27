@@ -1,13 +1,13 @@
-﻿using CustomerService.Models;
+﻿using CustomerApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomerService.Data.Repository
+namespace CustomerApi.Data.Repository
 {
     public class CustomerRepository : IRepository<Customer>
     {
-        private readonly CustomerServiceContext _context;
+        private readonly CustomerApiContext _context;
 
-        public CustomerRepository(CustomerServiceContext context)
+        public CustomerRepository(CustomerApiContext context)
         {
             _context = context;
         }
