@@ -12,6 +12,7 @@ import { TicketComponent } from './tickets/ticket/ticket.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LoginComponent } from './shared/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { HomeComponent } from './home/home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     TicketsComponent,
     TicketComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
