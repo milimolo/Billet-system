@@ -6,8 +6,10 @@ import {CommonModule} from "@angular/common";
 import {TicketsComponent} from "./tickets/tickets.component";
 import {TicketComponent} from "./tickets/ticket/ticket.component";
 import {LoginComponent} from "./shared/login/login.component";
+import {HomeComponent} from "./home/home/home.component";
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
   {path: 'Orders', component: OrdersComponent},
   {path: 'Orders/:id', component: OrderComponent},
   {path: 'Tickets', component: TicketsComponent},
