@@ -1,7 +1,7 @@
 <ul>
-  <li><a routerLink="/">Home</a></li>
-  <li><a routerLink="/Tickets">Tickets</a></li>
+  <li><a routerLink="/">Hjem</a></li>
+  <li><a routerLink="/Tickets">Billetter</a></li>
   <li *ngIf="!checkIfLoggedIn()"><a routerLink="/Login">Login</a></li>
-  <li *ngIf="checkIfLoggedIn()"><a routerLink="/Customers/">My page</a> </li>
+  <li *ngIf="checkIfLoggedIn()"><a routerLink="/Customers/">Min side</a> </li>
   <li *ngIf="checkIfLoggedIn()"><a (click)="logout()">Logout</a> </li>
 </ul>

@@ -1,26 +1,34 @@
-<button class="btn btn-primary" routerLink="/Tickets">Back</button>
 <div *ngIf="ticket">
-  <h2>{{ticket.name}} Details</h2>
-  <div>
-    <label>Event location:
-      <h4>{{ticket.location}}</h4>
-    </label>
+  <div id="header-wrapper">
+    <!-- Hero -->
+    <section id="hero" class="container">
+      <header>
+        <h2>{{ticket.name}}</h2>
+        <div>
+          <label>Event location:
+            <h2>{{ticket.location}}</h2>
+          </label>
+        </div>
+        <div>
+          <label>Event date:
+            <h2>{{ticket.eventDate}}</h2>
+          </label>
+        </div>
+        <div>
+          <label>Tickets remaining:
+            <h2>{{ticket.ticketsRemaining-ticket.ticketsReserved}}</h2>
+          </label>
+        </div>
+        <div>
+          <label>Price:
+            <h2>{{ticket.price}},-</h2>
+          </label>
+        </div>
+      </header>
+    </section>
+
   </div>
-  <div>
-    <label>Event date:
-      <h4>{{ticket.eventDate}}</h4>
-    </label>
-  </div>
-  <div>
-    <label>Tickets remaining:
-      <h4>{{ticket.ticketsRemaining-ticket.ticketsReserved}}</h4>
-    </label>
-  </div>
-  <div>
-    <label>Price:
-      <h4>{{ticket.price}},-</h4>
-    </label>
-  </div>
+
 
 </div>
 <div *ngIf="!ticket">
