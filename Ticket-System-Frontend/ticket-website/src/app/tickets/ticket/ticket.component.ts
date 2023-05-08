@@ -14,7 +14,7 @@ export class TicketComponent implements OnInit{
               private ticketService: TicketService) { }
   @Input() ticket: Ticket;
   ngOnInit(): void {
-    const id = +!this.route.snapshot.queryParamMap.get('id');
+    const id = this.route.snapshot.params['id'];
     this.ticketService.getTicket(id)
       .subscribe(ticket => {
         this.ticket = ticket;
