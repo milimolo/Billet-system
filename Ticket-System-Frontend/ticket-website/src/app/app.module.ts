@@ -13,6 +13,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LoginComponent } from './shared/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home/home.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateOrderComponent } from './orders/create-order/create-order.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -23,7 +26,8 @@ import { HomeComponent } from './home/home/home.component';
     TicketComponent,
     NavbarComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    CreateOrderComponent
   ],
   imports: [
     BrowserModule,
@@ -31,9 +35,12 @@ import { HomeComponent } from './home/home/home.component';
     HttpClientModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,22 +5,22 @@
       <header>
         <h2>{{ticket.name}}</h2>
         <div>
-          <label>Event location:
+          <label>Lokation af Begivenhed:
             <h2>{{ticket.location}}</h2>
           </label>
         </div>
         <div>
-          <label>Event date:
-            <h2>{{ticket.eventDate}}</h2>
+          <label>Dato for begivenhed:
+            <h2>{{formattedDate}}</h2>
           </label>
         </div>
         <div>
-          <label>Tickets remaining:
+          <label>Billetter tilbage:
             <h2>{{ticket.ticketsRemaining-ticket.ticketsReserved}}</h2>
           </label>
         </div>
         <div>
-          <label>Price:
+          <label>Pris:
             <h2>{{ticket.price}},-</h2>
           </label>
         </div>
@@ -28,11 +28,24 @@
     </section>
   </div>
   <div style="margin: auto">
-    <ul class="actions">
-      <li class="button">Bestil</li>
-    </ul>
+    <form (ngSubmit)="putInCart(ticket.id, noOfTickets, ticketConfirmationTemplate)">
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" [(ngModel)]="noOfTickets" required min="1" max="100">
+      <button type="submit" class="button">Bestil</button>
+    </form>
   </div>
 
+  <br><br>
+  <pre class="card card-block card-header">{{message}}</pre>
+  <ng-template #ticketConfirmationTemplate>
+    <div class="modal-body text-center">
+      <p>Din kurv er blevet opdateret:</p>
+      <p>{{ticket.name}}</p>
+      <p>{{noOfTickets}} ticket(s)</p>
+      <p>Fulde pris {{ticket.price * noOfTickets}} DKK</p>
+      <button type="button" class="btn btn-default" (click)="confirm()" >Okay</button>
+    </div>
+  </ng-template>
 
 </div>
 <div *ngIf="!ticket">

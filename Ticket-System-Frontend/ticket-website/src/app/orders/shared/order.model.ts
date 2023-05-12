@@ -1,9 +1,16 @@
 import {OrderLine} from "./orderLine.model";
 
 export interface Order {
-  id: number;
-  date: Date;
+  id?: number;
   customerId: number;
-  orderLines: OrderLine[];
+  date: Date;
+  orderLines?: OrderLine[];
+  orderStatus?: OrderStatus;
   totalPrice: number;
+}
+
+export enum OrderStatus {
+  Tentative,
+  Completed,
+  Cancelled
 }

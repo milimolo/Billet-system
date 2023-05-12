@@ -7,6 +7,7 @@ import {TicketsComponent} from "./tickets/tickets.component";
 import {TicketComponent} from "./tickets/ticket/ticket.component";
 import {LoginComponent} from "./shared/login/login.component";
 import {HomeComponent} from "./home/home/home.component";
+import {CreateOrderComponent} from "./orders/create-order/create-order.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'Orders/:id', component: OrderComponent},
   {path: 'Tickets', component: TicketsComponent},
   {path: 'Tickets/:id', component: TicketComponent},
-  {path: 'Login', component: LoginComponent}
+  {path: 'Login', component: LoginComponent},
+  {path: 'create-order', component: CreateOrderComponent}
 ];
 
 @NgModule({

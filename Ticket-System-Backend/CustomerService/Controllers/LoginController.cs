@@ -35,6 +35,7 @@ namespace CustomerApi.Controllers
             // Authentication successful
             return Ok(new
             {
+                id = user.Id,
                 username = user.Email,
                 token = authenticationHelper.GenerateToken(user)
             });

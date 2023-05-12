@@ -1,0 +1,42 @@
+<div id="header-wrapper">
+  <!-- Hero -->
+  <section id="hero" class="container">
+    <header>
+      <h2>Kurv</h2>
+    </header>
+  </section>
+</div>
+<div id="cart" class="list-group">
+  Kurv:
+  <ul>
+    <li *ngFor="let ol of orderlines">
+      <div *ngFor="let cartItem of cart">
+        <div *ngIf="cartItem.id === ol.productId">
+          Begivenhed: {{cartItem.name}} <br/>
+          Dato: {{cartItem.date}}
+        </div>
+      </div>
+      <div>
+        <div>
+          Antal: {{ol.noOfItems}} <br/>
+          Pris: {{ol.price}} DKK
+        </div>
+
+      </div>
+      __________________________________
+    </li>
+    <div>
+      I alt: {{totalPrice}} DKK
+    </div>
+  </ul>
+</div>
+
+<div id="order" class="list-group">
+  <h3>Order details:</h3>
+  E-mail: {{user.username}}
+  <button type="button" class="btn btn-default" style="margin-top: 1rem;" (click)="placeOrder(order)">Køb</button>
+  <div *ngIf="orderConfirmed">
+    <h2>Ordre er blevet gennemført. <br/>
+    Tak for købet.</h2>
+  </div>
+</div>

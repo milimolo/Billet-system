@@ -4,4 +4,5 @@
   <li *ngIf="!checkIfLoggedIn()"><a routerLink="/Login">Login</a></li>
   <li *ngIf="checkIfLoggedIn()"><a routerLink="/Customers/">Min side</a> </li>
   <li *ngIf="checkIfLoggedIn()"><a (click)="logout()">Logout</a> </li>
+  <li *ngIf="checkIfLoggedIn()" style="float: right"><a routerLink="/create-order">Kurv</a></li>
 </ul>

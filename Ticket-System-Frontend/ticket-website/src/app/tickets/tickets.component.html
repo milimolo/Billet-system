@@ -5,14 +5,13 @@
       <h2>Alle Billetter</h2>
     </header>
   </section>
-
 </div>
 <ul class="list-group" *ngIf="tickets">
   <li *ngFor="let ticket of tickets">
     <a href="#" class="list-group-item waves-light" routerLink="/Tickets/{{ticket.id}}">
       {{ticket.name}}
       <div>
-        Price: {{ticket.price}},- Tickets left: {{ticket.ticketsRemaining - ticket.ticketsReserved}}
+        Pris: {{ticket.price}},- Billetter tilbage: {{ticket.ticketsRemaining - ticket.ticketsReserved}}
         <div>
           {{ticket.location}}
         </div>

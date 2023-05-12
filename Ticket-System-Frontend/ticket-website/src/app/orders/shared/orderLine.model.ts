@@ -1,6 +1,6 @@
 export interface OrderLine {
-  id: number;
-  orderId: number;
+  id?: number;
+  orderId?: number;
   productId: number;
   noOfItems: number;
   price: number;
