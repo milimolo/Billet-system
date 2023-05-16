@@ -22,3 +22,9 @@ services:
 
   redis:
     image: redis
+  cacheapi:
+    image: ${DOCKER_REGISTRY-}cacheapi
+    build:
+      context: .
+      dockerfile: CacheApi/Dockerfile
+

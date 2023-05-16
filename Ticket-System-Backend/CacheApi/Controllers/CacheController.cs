@@ -28,7 +28,7 @@ namespace CacheApi.Controllers
             }
 
             // If the ticket is not in the cache, fetch it from the ticket API
-            var response = await _httpClient.GetAsync($"https://localhost:57195/tickets/{id}");
+            var response = await _httpClient.GetAsync($"http://TicketApi/tickets/{id}");
             response.EnsureSuccessStatusCode();
             ticket = await response.Content.ReadFromJsonAsync<TicketDto>();
 
