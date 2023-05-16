@@ -28,15 +28,15 @@ namespace CacheApi.Controllers
             }
 
             // If the ticket is not in the cache, fetch it from the ticket API
-            var response = await _httpClient.GetAsync($"https://localhost:56666/tickets/{id}");
+            var response = await _httpClient.GetAsync($"https://localhost:57195/tickets/{id}");
             response.EnsureSuccessStatusCode();
             ticket = await response.Content.ReadFromJsonAsync<TicketDto>();
 
             // Add the ticket to the cache, using write-back and LRU eviction policies
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSize(1) // Each ticket takes up one unit of cache space
-                .SetPriority(CacheItemPriority.NeverRemove) // Prevent eviction due to memory pressure
-                .SetAbsoluteExpiration(TimeSpan.FromMinutes(10)); // Expire after 60 seconds of inactivity
+                .SetPriority(CacheItemPriority.High) // Prevent eviction due to memory pressure
+                .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
 
             _cache.Set(id, ticket, cacheEntryOptions);
             if (_cache.TryGetValue(id, out TicketDto ticket2))
