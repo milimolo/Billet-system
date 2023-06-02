@@ -72,14 +72,24 @@ namespace OrderApi.Controllers
 
                 // Wait for orderStatus to return "Completed"
                 bool completed = false;
+                int maxAttempts = 4;
+                int currentAttempt = 0;
                 while (!completed)
                 {
-                    var tentativeOrder = await repository.GetForMessageAsync(newOrder.Id, cancellationToken);
-                    if (tentativeOrder.OrderStatus == OrderStatus.Completed)
+                    if(currentAttempt == maxAttempts)
                     {
-                        completed = true;
+                        return StatusCode(500, "The order timed out. Please try wait 5 minutes and try again.");
                     }
-                    Thread.Sleep(500);
+                    else
+                    {
+                        currentAttempt++;
+                        var tentativeOrder = await repository.GetForMessageAsync(newOrder.Id, cancellationToken);
+                        if (tentativeOrder.OrderStatus == OrderStatus.Completed)
+                        {
+                            completed = true;
+                        }
+                        Thread.Sleep(500);
+                    }
                 }
 
                 return CreatedAtRoute("GetOrder", new { id = newOrder.Id }, newOrder);

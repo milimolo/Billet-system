@@ -13,18 +13,17 @@ services:
       context: .
       dockerfile: CustomerService/Dockerfile
 
-
   ticketapi:
     image: ${DOCKER_REGISTRY-}ticketapi
     build:
       context: .
       dockerfile: TicketApi/Dockerfile
 
-  redis:
-    image: redis
   cacheapi:
     image: ${DOCKER_REGISTRY-}cacheapi
     build:
       context: .
       dockerfile: CacheApi/Dockerfile
 
+  redis:
+    image: redis

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using SharedModels;
+using System.Text;
 
 namespace CacheApi.Controllers
 {
@@ -32,7 +34,7 @@ namespace CacheApi.Controllers
             response.EnsureSuccessStatusCode();
             ticket = await response.Content.ReadFromJsonAsync<TicketDto>();
 
-            // Add the ticket to the cache, using write-back and LRU eviction policies
+            // Add the ticket to the cache, using LRU eviction policies
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSize(1) // Each ticket takes up one unit of cache space
                 .SetPriority(CacheItemPriority.High) // Prevent eviction due to memory pressure
@@ -45,6 +47,40 @@ namespace CacheApi.Controllers
             }
 
             return Ok(ticket);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostOrder([FromBody] Order order, CancellationToken cancellationToken)
+        {
+            // Serialize the order object to JSON
+            string jsonOrderContent = JsonConvert.SerializeObject(order);
+            StringContent content = new StringContent(jsonOrderContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync($"http://OrderApi/orders/", content);
+            if (response.IsSuccessStatusCode)
+            {
+                foreach (var orderLine in order.OrderLines)
+                {
+                    _cache.TryGetValue(orderLine.ProductId, out TicketDto ticket);
+                    ticket.TicketsReserved += orderLine.NoOfItems;
+                    UpdateCachedTicket(ticket);
+                }
+                return Ok(order);
+            } 
+            else
+            {
+                return StatusCode(500, "The order could not be created.");
+            }
+        }
+
+        private async void UpdateCachedTicket(TicketDto ticket)
+        {
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSize(1) // Each ticket takes up one unit of cache space
+                .SetPriority(CacheItemPriority.High) // Prevent eviction due to memory pressure
+                .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
+
+            _cache.Set(ticket.Id, ticket, cacheEntryOptions);
         }
     }
 }
