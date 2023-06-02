@@ -24,6 +24,6 @@ export class TicketService {
   }
 
   getTicketCache(id: number): Observable<Ticket>{
-    return this.http.get<Ticket>(environment.cacheApiUrl + '/Tickets/' + id);
+    return this.http.get<Ticket>(environment.cacheApiUrl + '/Cache/' + id);
   }
 }

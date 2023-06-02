@@ -20,7 +20,7 @@ namespace CacheApi.Controllers
             _httpClient = httpClientFactory.CreateClient();
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTicket(int id)
         {
             // Try to get the ticket from the cache
@@ -49,7 +49,7 @@ namespace CacheApi.Controllers
             return Ok(ticket);
         }
 
-        [HttpPost]
+        [HttpPost("order")]
         public async Task<IActionResult> PostOrder([FromBody] Order order, CancellationToken cancellationToken)
         {
             // Serialize the order object to JSON

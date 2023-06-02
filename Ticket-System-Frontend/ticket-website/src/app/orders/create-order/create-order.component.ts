@@ -65,4 +65,12 @@ export class CreateOrderComponent implements OnInit{
         });
     }
   }
+
+  clearCart() {
+    let cart = this.cart;
+    cart = [];
+    localStorage.setItem('currentCart', JSON.stringify(cart));
+    this.orderlines = [];
+    this.totalPrice = 0;
+  }
 }

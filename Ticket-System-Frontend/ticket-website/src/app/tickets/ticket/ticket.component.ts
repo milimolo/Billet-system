@@ -27,7 +27,7 @@ export class TicketComponent implements OnInit{
 
   ngOnInit(): void {
     const id = this.route.snapshot.params['id'];
-    this.ticketService.getTicket(id)
+    this.ticketService.getTicketCache(id)
       .subscribe(ticket => {
         this.ticket = ticket;
         this.formattedDate = <string>this.datePipe.transform(this.ticket.eventDate, 'dd-MM-yyyy HH:mm');

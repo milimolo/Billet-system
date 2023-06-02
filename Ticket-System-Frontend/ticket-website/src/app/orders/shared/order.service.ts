@@ -19,13 +19,15 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   getOrders(): Observable<Order[]> {
-    // httpOptions.headers ?
-    //   httpOptions.headers.set()
       return this.http.get<Order[]>(environment.orderApiUrl + '/Orders');
   }
 
   addOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(environment.orderApiUrl + '/Orders', order);
+  }
+
+  addOrderCache(order: Order): Observable<Order> {
+    return this.http.post<Order>(environment.cacheApiUrl + '/Order', order);
   }
 
   getOrder(id: number): Observable<Order> {
