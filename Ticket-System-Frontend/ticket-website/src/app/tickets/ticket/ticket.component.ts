@@ -20,6 +20,7 @@ export class TicketComponent implements OnInit{
   modalRef: BsModalRef;
   message: string;
   formattedDate: string;
+  amountLeft: number;
 
   @Input() ticket: Ticket;
   @Input() noOfTickets: number;
@@ -30,11 +31,12 @@ export class TicketComponent implements OnInit{
       .subscribe(ticket => {
         this.ticket = ticket;
         this.formattedDate = <string>this.datePipe.transform(this.ticket.eventDate, 'dd-MM-yyyy HH:mm');
+        this.amountLeft = ticket.ticketsRemaining - ticket.ticketsReserved;
       });
   }
 
   putInCart(ticketId: number, ticketAmount: number, template: TemplateRef<any>): void {
-    if(this.noOfTickets > 0){
+    if(ticketAmount > 0 && ticketAmount < 50 && this.noOfTickets < this.amountLeft){
       const cartItem = {
         id: this.ticket.id,
         quantity: this.noOfTickets,
@@ -46,7 +48,6 @@ export class TicketComponent implements OnInit{
       // @ts-ignore
       let cart = JSON.parse(localStorage.getItem('currentCart'));
       let isInCart = false;
-      console.log(cart);
       if(cart){
         // @ts-ignore
         isInCart = cart.some(item => item.id === cartItem.id);

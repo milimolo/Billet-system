@@ -30,8 +30,9 @@
   <div style="margin: auto">
     <form (ngSubmit)="putInCart(ticket.id, noOfTickets, ticketConfirmationTemplate)">
       <label for="quantity">Quantity:</label>
-      <input type="number" id="quantity" name="quantity" [(ngModel)]="noOfTickets" required min="1" max="100">
+      <input type="number" id="quantity" name="quantity" [(ngModel)]="noOfTickets" required min="1" max="50">
       <button type="submit" class="button">Bestil</button>
+      <label *ngIf="noOfTickets > 50">You cannot buy more than 50 tickets!</label>
     </form>
   </div>
 
