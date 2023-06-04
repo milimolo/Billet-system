@@ -24,6 +24,13 @@ namespace TicketApi.Controllers
             return Ok(tickets);
         }
 
+        [HttpGet("topfive")]
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetFirstFiveTicketsAsync(CancellationToken cancellationToken)
+        {
+            var tickets = await repository.GetFirstFiveTicketsAsync(cancellationToken);
+            return Ok(tickets);
+        }
+
         // GET: Tickets/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ticket>> GetTicketAsync(int id, CancellationToken cancellationToken)

@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  orderApiUrl: 'https://localhost:49212',
-  ticketApiUrl: 'https://localhost:49208',
-  customerApiUrl: 'https://localhost:49210',
-  cacheApiUrl: 'https://localhost:49214'
+  orderApiUrl: 'https://localhost:51060',
+  ticketApiUrl: 'https://localhost:51062',
+  customerApiUrl: 'https://localhost:51066',
+  cacheApiUrl: 'https://localhost:51064'
 };

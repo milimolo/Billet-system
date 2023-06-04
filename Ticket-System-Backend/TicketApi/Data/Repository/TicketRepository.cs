@@ -35,6 +35,11 @@ namespace TicketApi.Data.Repository
             return await _context.Tickets.FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
 
+        public async Task<IEnumerable<Ticket>> GetFirstFiveTicketsAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Tickets.Take(5).ToListAsync(cancellationToken);
+        }
+
         public async Task RemoveAsync(int id, CancellationToken cancellationToken = default)
         {
             Ticket? ticket = await GetAsync(id, cancellationToken);

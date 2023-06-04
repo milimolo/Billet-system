@@ -27,7 +27,7 @@ export class OrderService {
   }
 
   addOrderCache(order: Order): Observable<Order> {
-    return this.http.post<Order>(environment.cacheApiUrl + '/Order', order);
+    return this.http.post<Order>(environment.cacheApiUrl + '/cache/Order', order);
   }
 
   getOrder(id: number): Observable<Order> {

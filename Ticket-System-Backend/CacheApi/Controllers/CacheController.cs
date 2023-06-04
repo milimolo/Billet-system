@@ -20,6 +20,31 @@ namespace CacheApi.Controllers
             _httpClient = httpClientFactory.CreateClient();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllTickets()
+        {
+            // Try to get all tickets from the cache
+            if (_cache.TryGetValue("all_tickets", out List<TicketDto> tickets))
+            {
+                return Ok(tickets);
+            }
+
+            // If the tickets are not in the cache, fetch them from the ticket API
+            var response = await _httpClient.GetAsync("http://TicketApi/tickets");
+            response.EnsureSuccessStatusCode();
+            tickets = await response.Content.ReadFromJsonAsync<List<TicketDto>>();
+
+            // Add the tickets to the cache, using appropriate options
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSize(1) // Each ticket takes up one unit of cache space
+                .SetPriority(CacheItemPriority.High) 
+                .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
+
+            _cache.Set("all_tickets", tickets, cacheEntryOptions);
+
+            return Ok(tickets);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTicket(int id)
         {
@@ -37,14 +62,10 @@ namespace CacheApi.Controllers
             // Add the ticket to the cache, using LRU eviction policies
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSize(1) // Each ticket takes up one unit of cache space
-                .SetPriority(CacheItemPriority.High) // Prevent eviction due to memory pressure
+                .SetPriority(CacheItemPriority.High)
                 .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
 
             _cache.Set(id, ticket, cacheEntryOptions);
-            if (_cache.TryGetValue(id, out TicketDto ticket2))
-            {
-                Console.WriteLine(ticket2.Name);
-            }
 
             return Ok(ticket);
         }
@@ -63,8 +84,12 @@ namespace CacheApi.Controllers
                 {
                     _cache.TryGetValue(orderLine.ProductId, out TicketDto ticket);
                     ticket.TicketsReserved += orderLine.NoOfItems;
+                    _cache.TryGetValue("all_tickets", out List<TicketDto> tickets);
+                    tickets.Where(t => t.Id == orderLine.ProductId).Select(t => t.TicketsReserved += orderLine.NoOfItems);
                     UpdateCachedTicket(ticket);
+                    UpdateAllCachedTickets(tickets);
                 }
+
                 return Ok(order);
             } 
             else
@@ -77,10 +102,20 @@ namespace CacheApi.Controllers
         {
             var cacheEntryOptions = new MemoryCacheEntryOptions()
                 .SetSize(1) // Each ticket takes up one unit of cache space
-                .SetPriority(CacheItemPriority.High) // Prevent eviction due to memory pressure
+                .SetPriority(CacheItemPriority.High)
                 .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
 
             _cache.Set(ticket.Id, ticket, cacheEntryOptions);
+        }
+
+        private async void UpdateAllCachedTickets(List<TicketDto> tickets)
+        {
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSize(1) // Each ticket takes up one unit of cache space
+                .SetPriority(CacheItemPriority.High)
+                .SetSlidingExpiration(TimeSpan.FromSeconds(60)); // Expire after 60 seconds of inactivity
+
+            _cache.Set("all_tickets", tickets, cacheEntryOptions);
         }
     }
 }

@@ -53,7 +53,7 @@ export class CreateOrderComponent implements OnInit{
 
   placeOrder(order: Order) {
     if(this.cart.length !== 0){
-      this.orderService.addOrder(order)
+      this.orderService.addOrderCache(order)
         .subscribe(response =>{
           if(response){
             console.log(response);
