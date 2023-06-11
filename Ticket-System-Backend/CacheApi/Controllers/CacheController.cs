@@ -82,12 +82,16 @@ namespace CacheApi.Controllers
             {
                 foreach (var orderLine in order.OrderLines)
                 {
-                    _cache.TryGetValue(orderLine.ProductId, out TicketDto ticket);
-                    ticket.TicketsReserved += orderLine.NoOfItems;
-                    _cache.TryGetValue("all_tickets", out List<TicketDto> tickets);
-                    tickets.Where(t => t.Id == orderLine.ProductId).Select(t => t.TicketsReserved += orderLine.NoOfItems);
-                    UpdateCachedTicket(ticket);
-                    UpdateAllCachedTickets(tickets);
+                    if (_cache.TryGetValue(orderLine.ProductId, out TicketDto ticket))
+                    {
+                        ticket.TicketsReserved += orderLine.NoOfItems;
+                        UpdateCachedTicket(ticket);
+                    }
+                    if(_cache.TryGetValue("all_tickets", out List<TicketDto> tickets))
+                    {
+                        tickets.Where(t => t.Id == orderLine.ProductId).ToList().ForEach(t => t.TicketsReserved += orderLine.NoOfItems);
+                        UpdateAllCachedTickets(tickets);
+                    }
                 }
 
                 return Ok(order);

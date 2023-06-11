@@ -72,7 +72,7 @@ namespace OrderApi.Controllers
 
                 // Wait for orderStatus to return "Completed"
                 bool completed = false;
-                int maxAttempts = 4;
+                int maxAttempts = 5;
                 int currentAttempt = 0;
                 while (!completed)
                 {
