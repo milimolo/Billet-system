@@ -78,6 +78,7 @@ namespace OrderApi.Controllers
                 {
                     if(currentAttempt == maxAttempts)
                     {
+                        repository.RemoveAsync(order.Id, cancellationToken);
                         return StatusCode(500, "The order timed out. Please try wait 5 minutes and try again.");
                     }
                     else
@@ -96,6 +97,7 @@ namespace OrderApi.Controllers
             }
             catch
             {
+                repository.RemoveAsync(order.Id, cancellationToken);
                 return StatusCode(500, "The order could not be created. Please try again.");
             }
         }
